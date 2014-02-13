@@ -1,0 +1,18 @@
+#Coverage test is out-of-date, it is not guaranteed
+#working well with newer kernel
+
+SIMPLE cases/coverage/soft-inj/run_simple.sh off
+#KDUMP cases/coverage/soft-inj/run_kdump.sh off
+APEI-INJ cases/function/apei-inj/runtest.sh off
+ERST-INJ cases/function/erst-inject/runtest.sh off
+#PFA test depends on correct BIOS/mcelog setting
+PFA cases/function/pfa/runtest.sh off
+#HWpoison
+HWPOISON-SOFT cases/function/hwpoison/run_soft.sh off
+HWPOISON-HARD cases/function/hwpoison/run_hard.sh off
+HWPOISON-HUGEPAGE cases/function/hwpoison/run_hugepage.sh off
+HWPOISON-HUGEPAGE-OVERCOMMIT cases/function/hwpoison/run_hugepage_overcommit.sh off
+HWPOISON-THP cases/function/hwpoison/run_thp.sh off
+#KVM
+STRESS-HWPOISON-SOFT cases/stress/hwpoison/run_soft.sh on
+STRESS-HWPOISON-HARD cases/stress/hwpoison/run_hard.sh on

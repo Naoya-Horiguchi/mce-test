@@ -69,14 +69,14 @@ cleanup()
 				break;
 			fi
 		done
-		if [ -z $answer ]; then
-			read -p "$EXIT_MSG \"${TMP_DIR}\"? [Yes/No]:" answer
-			answer=`echo $answer | tr 'a-z' 'A-Z'`
-		fi
+		# if [ -z $answer ]; then
+		# 	read -p "$EXIT_MSG \"${TMP_DIR}\"? [Yes/No]:" answer
+		# 	answer=`echo $answer | tr 'a-z' 'A-Z'`
+		# fi
 		if [ "${answer}" == "Y" -o "${answer}" == "YES" \
 			-o "${answer}" == "" ]
 		then
-			rm -rf $TMP_DIR/*
+		    rm -rf $TMP_DIR/*
 		fi
 	fi
 }

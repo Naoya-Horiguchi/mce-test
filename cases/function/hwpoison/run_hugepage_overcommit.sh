@@ -20,7 +20,6 @@ exec_testcase() {
 	if [ $? -eq 0 ] ; then
 		echo "$command returned with success."
 	else
-		"FAIL: migration failed."
 		failed_testcase=$[failed_testcase+1]
 	fi
 }

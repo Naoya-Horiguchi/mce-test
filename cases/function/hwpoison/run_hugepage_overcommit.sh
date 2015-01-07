@@ -13,8 +13,11 @@ exec_testcase() {
 	echo "-------------------------------------"
 	local command="./thugetlb_overcommit 1"
 	echo "TestCase $command"
-	sysctl -q vm.nr_overcommit_hugepages=10
-	sysctl -q vm.nr_hugepages=1
+	sysctl vm.nr_overcommit_hugepages
+	sysctl vm.nr_hugepages
+	cat /proc/meminfo
+	sysctl vm.nr_overcommit_hugepages=10
+	sysctl vm.nr_hugepages=1
 	executed_testcase=$[executed_testcase+1]
 	$command
 	if [ $? -eq 0 ] ; then

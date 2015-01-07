@@ -950,6 +950,14 @@ select_injector()
 	fi
 }
 
+set_console_output() {
+    local tty=`tty`
+    if [ $? -ne 0 ] ; then
+        tty=$g_rootdir/log/console_output
+    fi
+    echo $tty
+}
+
 g_children=0	# child process num for each workload.
 		# 0 means using default child process num of each workload.
 g_dev=
@@ -979,7 +987,7 @@ g_result=$g_resultdir/hwpoison.result
 g_failed=0
 g_time_s=
 g_time_e=
-g_tty=`tty`
+g_tty=$(set_console_output)
 g_pid_madv=
 g_pid_fsmeta=
 g_pid_ltp=

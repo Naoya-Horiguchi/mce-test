@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <sys/mman.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <error.h>
 #include "hugepage.h"
 
 #define HPAGE_SIZE (2UL*1024*1024)
@@ -17,8 +19,12 @@ int main(int argc, char *argv[])
 
 	nr_hugepages = strtol(argv[1], NULL, 10);
 	addr = alloc_anonymous_hugepage(nr_hugepages * HPAGE_SIZE, 0);
+	if (!addr)
+		errmsg("alloc_anonymous_hugepage failed.\n");
 	write_hugepage(addr, nr_hugepages, NULL);
 	ret = madvise(addr, PS, MADV_SOFT_OFFLINE);
+	if (ret == -1)
+		perror("madvise");
 	free_anonymous_hugepage(addr, nr_hugepages * HPAGE_SIZE);
 	return ret;
 }

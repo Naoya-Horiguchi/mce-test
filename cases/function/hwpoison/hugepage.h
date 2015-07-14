@@ -85,18 +85,18 @@ int hugetlbfs_root(char *dir)
 	return found;
 }
 
-/* Assume there is only one types of hugepage size for now. */
 int gethugepagesize(void)
 {
 	int hpagesize = 0;
-	struct dirent *dent;
-	DIR *dir;
-	dir = opendir("/sys/kernel/mm/hugepages");
-	if (!dir) err("open /sys/kernel/mm/hugepages");
-	while ((dent = readdir(dir)) != NULL)
-		if (sscanf(dent->d_name, "hugepages-%dkB", &hpagesize) >= 1)
+	FILE *f = fopen("/proc/meminfo", "r");
+	if (!f) err("open /proc/meminfo");
+	char *line = NULL;
+	size_t linelen = 0;
+	while (getline(&line, &linelen, f) > 0)
+		if (sscanf(line, "Hugepagesize: %d kB", &hpagesize) >= 1)
 			break;
-	closedir(dir);
+	free(line);
+	fclose(f);
 	return hpagesize * 1024;
 }
 

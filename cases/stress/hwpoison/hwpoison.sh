@@ -951,8 +951,8 @@ select_injector()
 }
 
 set_console_output() {
-    local tty=`tty`
-    if [ $? -ne 0 ] ; then
+    local tty="$(tty)"
+    if [ $? -ne 0 ] || [ "$tty" == "not a tty" ] ; then
         tty=$g_rootdir/log/console_output
     fi
     echo $tty
